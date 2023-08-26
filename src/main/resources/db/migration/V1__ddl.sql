@@ -1,0 +1,19 @@
+CREATE TABLE categoria (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    situacao VARCHAR(20) NOT NULL,
+    criado_em TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE produto (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10, 2) NOT NULL,
+    situacao VARCHAR(20) NOT NULL,
+    criado_em TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+);
