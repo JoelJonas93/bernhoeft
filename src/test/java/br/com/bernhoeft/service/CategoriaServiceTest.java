@@ -40,47 +40,38 @@ public class CategoriaServiceTest {
 	List<Categoria> categorias = new ArrayList<>();
 	Categoria categoria1 = new Categoria();
 	Categoria categoria2 = new Categoria();
+	CategoriaDTO dto = new CategoriaDTO();
 
 	@BeforeEach
 	void setUp() {
 		categoria1.setId(1l);
 		categoria1.setNome("Eletrônicos");
 		categoria1.setSituacao(Status.ATIVO);
-		categoria2.setId(1l);
+		categoria2.setId(2l);
 		categoria2.setNome("Eletrônicos");
 		categoria2.setSituacao(Status.ATIVO);
 		categorias.add(categoria1);
 		categorias.add(categoria2);
+		
+		dto.setNome("Eletrônicos");
+		dto.setSituacao(Status.ATIVO);
 	}
 
 	@Test
 	void saveCategoria() {
-		CategoriaDTO dto = new CategoriaDTO();
-		dto.setNome("Eletrônicos");
-		dto.setSituacao(Status.ATIVO);
-
-		Categoria categoria = dto.toCategoria();
-
-		Mockito.when(categoriaRepository.save(categoria)).thenReturn(categoria);
+		Mockito.when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria1);
 
 		Categoria result = service.save(dto);
 
-		Assertions.assertEquals(result.getNome(), dto.toCategoria().getNome());
+		Assertions.assertEquals(result.getNome(), dto.getNome());
 	}
 
 	@Test
 	void updateCategoria() {
-		CategoriaDTO dto = new CategoriaDTO();
-		dto.setId(1l);
-		dto.setNome("Eletrônicos");
-		dto.setSituacao(Status.ATIVO);
+		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria1));
+		Mockito.when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria1);
 
-		Categoria categoria = dto.toCategoria();
-
-		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria));
 		dto.setSituacao(Status.INATIVO);
-		Mockito.when(categoriaRepository.save(categoria)).thenReturn(dto.toCategoria());
-
 		Categoria result = service.update(dto);
 
 		Assertions.assertEquals(result.getSituacao(), dto.toCategoria().getSituacao());

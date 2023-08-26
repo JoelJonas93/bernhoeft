@@ -1,5 +1,21 @@
 package br.com.bernhoeft.service.impl;
 
-public class ProdutoServiceImpl {
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.bernhoeft.dto.ProdutoDTO;
+import br.com.bernhoeft.model.Produto;
+import br.com.bernhoeft.repository.ProdutoRepository;
+import br.com.bernhoeft.service.ProdutoService;
+
+public class ProdutoServiceImpl implements ProdutoService {
+	
+	@Autowired
+	private ProdutoRepository repository;
+
+	@Override
+	public Produto save(ProdutoDTO produtoDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

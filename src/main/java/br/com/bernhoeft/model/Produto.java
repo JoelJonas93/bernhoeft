@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.bernhoeft.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class Produto {
     private String nome;
     private String descricao;
     private double preco;
-    private String situacao;
+    private Status situacao;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "criado_em")
