@@ -1,9 +1,11 @@
 package br.com.bernhoeft.service;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +30,7 @@ public class ProdutoServiceTest {
 	private ProdutoServiceImpl service;
 	
 	@Mock
-	private ProdutoRepository produRepository;
+	private ProdutoRepository produtoRepository;
 	
 	Categoria categoria1 = new Categoria();
 	
@@ -67,10 +69,22 @@ public class ProdutoServiceTest {
 	
 	@Test
 	void saveProduto() {		
-		Mockito.when(produRepository.save(any(Produto.class))).thenReturn(produto1);
+		Mockito.when(produtoRepository.save(any(Produto.class))).thenReturn(produto1);
 		
 		Produto result = service.save(dto);
 		
 		Assertions.assertEquals(result.getNome(), dto.getNome());
+	}
+	
+	@Test
+	void updateProduto() {
+		Mockito.when(produtoRepository.findById(anyLong())).thenReturn(Optional.of(produto1));
+		Mockito.when(produtoRepository.save(any(Produto.class))).thenReturn(produto1);
+		
+		dto.setId(1l);
+		dto.setSituacao(Status.INATIVO);
+		Produto result = service.update(dto);
+		
+		Assertions.assertEquals(result.getSituacao(), dto.getSituacao());
 	}
 }

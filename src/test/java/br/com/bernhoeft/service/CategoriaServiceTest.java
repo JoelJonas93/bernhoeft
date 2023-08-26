@@ -70,7 +70,8 @@ public class CategoriaServiceTest {
 	void updateCategoria() {
 		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria1));
 		Mockito.when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria1);
-
+		
+		dto.setId(1l);
 		dto.setSituacao(Status.INATIVO);
 		Categoria result = service.update(dto);
 
@@ -79,14 +80,9 @@ public class CategoriaServiceTest {
 
 	@Test
 	void updateCategoriaNotExist() {
-		CategoriaDTO dto = new CategoriaDTO();
-		dto.setId(1l);
-		;
-		dto.setNome("Eletrônicos");
-		dto.setSituacao(Status.ATIVO);
-
 		Mockito.when(categoriaRepository.findById(anyLong())).thenThrow(EntityNotFoundException.class);
-
+		
+		dto.setId(1l);
 		Assertions.assertThrows(EntityNotFoundException.class, () -> {
 			service.update(dto);
 		});
