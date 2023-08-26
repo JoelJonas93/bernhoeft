@@ -2,11 +2,13 @@ package br.com.bernhoeft.model;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 import br.com.bernhoeft.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
@@ -22,11 +24,15 @@ import lombok.Data;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String nome;
     private String descricao;
+    
+    @Column(columnDefinition = "NUMERIC(10,2)")
     private double preco;
+    
+    @Enumerated(EnumType.STRING)
     private Status situacao;
 
     @Temporal(TemporalType.TIMESTAMP)

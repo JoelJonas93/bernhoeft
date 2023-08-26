@@ -1,11 +1,13 @@
 package br.com.bernhoeft.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import br.com.bernhoeft.dto.CategoriaDTO;
 import br.com.bernhoeft.enums.Status;
@@ -14,6 +16,7 @@ import br.com.bernhoeft.repository.CategoriaRepository;
 import br.com.bernhoeft.service.CategoriaService;
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class CategoriaServiceImpl implements CategoriaService {
 
 	@Autowired
@@ -21,6 +24,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public Categoria save(CategoriaDTO categoriaDTO) {
+		categoriaDTO.setCriadoEm(new Date());
 		return repository.save(categoriaDTO.toCategoria());
 	}
 
@@ -29,6 +33,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 		Optional<Categoria> categoriaOptional = repository.findById(categoriaDto.getId());
 		if (categoriaOptional.isPresent()) {
 			Categoria categoria = categoriaOptional.get();
+			categoria.setAtualizadoEm(new Date());
 			categoria.setNome(categoriaDto.getNome());
 			categoria.setSituacao(categoriaDto.getSituacao());
 			return repository.save(categoria);

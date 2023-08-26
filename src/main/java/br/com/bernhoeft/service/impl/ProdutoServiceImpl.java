@@ -1,11 +1,13 @@
 package br.com.bernhoeft.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import br.com.bernhoeft.dto.ProdutoDTO;
 import br.com.bernhoeft.model.Produto;
@@ -13,6 +15,7 @@ import br.com.bernhoeft.repository.ProdutoRepository;
 import br.com.bernhoeft.service.ProdutoService;
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class ProdutoServiceImpl implements ProdutoService {
 	
 	@Autowired
@@ -20,6 +23,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public Produto save(ProdutoDTO produtoDTO) {
+		produtoDTO.setCriadoEm(new Date());
 		return repository.save(produtoDTO.toProduto());
 	}
 
@@ -32,6 +36,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produto.setDescricao(produtoDTO.getDescricao());
 			produto.setPreco(produtoDTO.getPreco());
 			produto.setSituacao(produtoDTO.getSituacao());
+			produto.setAtualizadoEm(new Date());
 			produto.setCategoria(produtoDTO.getCategoria());
 			return repository.save(produto);
 		} else {

@@ -1,17 +1,15 @@
 package br.com.bernhoeft.model;
 
 import java.util.Date;
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
 
 import br.com.bernhoeft.enums.Status;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -23,9 +21,11 @@ import lombok.Data;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String nome;
+    
+    @Enumerated(EnumType.STRING)
     private Status situacao;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -35,7 +35,4 @@ public class Categoria {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "atualizado_em")
     private Date atualizadoEm;
-
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-    private List<Produto> produtos;
 }

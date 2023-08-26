@@ -1,7 +1,7 @@
 package br.com.bernhoeft.service;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 
 import java.util.ArrayList;
@@ -46,17 +46,17 @@ public class ProdutoServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		categoria1.setId(1l);
+		categoria1.setId(1);
 		categoria1.setNome("Eletrônicos");
 		categoria1.setSituacao(Status.ATIVO);
 
-		produto1.setId(1l);
+		produto1.setId(1);
 		produto1.setNome("Smartphone");
 		produto1.setDescricao("Um telefone inteligente");
 		produto1.setPreco(999.99);
 		produto1.setSituacao(Status.ATIVO);
 		produto1.setCategoria(categoria1);
-		produto2.setId(2l);
+		produto2.setId(2);
 		produto2.setNome("Tablet");
 		produto2.setDescricao("Um dispositivo tablet");
 		produto2.setPreco(399.99);
@@ -83,10 +83,10 @@ public class ProdutoServiceTest {
 
 	@Test
 	void updateProduto() {
-		Mockito.when(produtoRepository.findById(anyLong())).thenReturn(Optional.of(produto1));
+		Mockito.when(produtoRepository.findById(anyInt())).thenReturn(Optional.of(produto1));
 		Mockito.when(produtoRepository.save(any(Produto.class))).thenReturn(produto1);
 
-		dto.setId(1l);
+		dto.setId(1);
 		dto.setSituacao(Status.INATIVO);
 		Produto result = service.update(dto);
 
@@ -95,9 +95,9 @@ public class ProdutoServiceTest {
 
 	@Test
 	void updateProdutoNotExist() {
-		Mockito.when(produtoRepository.findById(anyLong())).thenThrow(EntityNotFoundException.class);
+		Mockito.when(produtoRepository.findById(anyInt())).thenThrow(EntityNotFoundException.class);
 
-		dto.setId(1l);
+		dto.setId(1);
 		Assertions.assertThrows(EntityNotFoundException.class, () -> {
 			service.update(dto);
 		});

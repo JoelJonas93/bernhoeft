@@ -1,7 +1,7 @@
 package br.com.bernhoeft.service;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 
@@ -44,10 +44,10 @@ public class CategoriaServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		categoria1.setId(1l);
+		categoria1.setId(1);
 		categoria1.setNome("Eletrônicos");
 		categoria1.setSituacao(Status.ATIVO);
-		categoria2.setId(2l);
+		categoria2.setId(2);
 		categoria2.setNome("Eletrônicos");
 		categoria2.setSituacao(Status.ATIVO);
 		categorias.add(categoria1);
@@ -68,10 +68,10 @@ public class CategoriaServiceTest {
 
 	@Test
 	void updateCategoria() {
-		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria1));
+		Mockito.when(categoriaRepository.findById(anyInt())).thenReturn(Optional.of(categoria1));
 		Mockito.when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria1);
 		
-		dto.setId(1l);
+		dto.setId(1);
 		dto.setSituacao(Status.INATIVO);
 		Categoria result = service.update(dto);
 
@@ -80,9 +80,9 @@ public class CategoriaServiceTest {
 
 	@Test
 	void updateCategoriaNotExist() {
-		Mockito.when(categoriaRepository.findById(anyLong())).thenThrow(EntityNotFoundException.class);
+		Mockito.when(categoriaRepository.findById(anyInt())).thenThrow(EntityNotFoundException.class);
 		
-		dto.setId(1l);
+		dto.setId(1);
 		Assertions.assertThrows(EntityNotFoundException.class, () -> {
 			service.update(dto);
 		});
