@@ -39,8 +39,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 	
 	@Override
 	public List<Categoria> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
