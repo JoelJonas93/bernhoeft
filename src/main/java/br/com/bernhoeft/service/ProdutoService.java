@@ -6,4 +6,5 @@ import br.com.bernhoeft.model.Produto;
 public interface ProdutoService {
 	
 	public Produto save(ProdutoDTO produtoDTO);
+	public Produto update(ProdutoDTO produtoDTO);
 }

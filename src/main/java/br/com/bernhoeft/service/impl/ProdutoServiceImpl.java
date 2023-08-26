@@ -14,6 +14,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public Produto save(ProdutoDTO produtoDTO) {
+		return repository.save(produtoDTO.toProduto());
+	}
+
+	@Override
+	public Produto update(ProdutoDTO produtoDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
