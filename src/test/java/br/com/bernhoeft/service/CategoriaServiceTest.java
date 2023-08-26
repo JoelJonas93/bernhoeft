@@ -87,6 +87,16 @@ public class CategoriaServiceTest {
 			service.update(dto);
 		});
 	}
+	
+	@Test
+	void findAll() {
+		Mockito.when(categoriaRepository.findAll()).thenReturn(categorias);
+		
+		List<Categoria> result = service.findAll();
+		
+		Mockito.verify(categoriaRepository, times(1)).findAll();
+		Assertions.assertEquals(2, result.size());
+	}
 
 	@Test
 	void getAllWithPagination() {

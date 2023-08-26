@@ -104,6 +104,16 @@ public class ProdutoServiceTest {
 	}
 	
 	@Test
+	void findAll() {
+		Mockito.when(produtoRepository.findAll()).thenReturn(produtos);
+		
+		List<Produto> result = service.findAll();
+		
+		Mockito.verify(produtoRepository, times(1)).findAll();
+		Assertions.assertEquals(2, result.size());
+	}
+	
+	@Test
 	void getAllWithPagination() {
 		Page<Produto> produtoPage = new PageImpl<>(produtos);
 		

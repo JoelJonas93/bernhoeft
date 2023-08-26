@@ -40,10 +40,15 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
+	public List<Produto> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public List<Produto> getAllWithPagination(int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Produto> produtoPage = repository.findAll(pageRequest);
         return produtoPage.getContent();
 	}
-
 }

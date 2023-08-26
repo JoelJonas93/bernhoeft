@@ -36,6 +36,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 			throw new EntityNotFoundException("Categoria não encontrada com ID: " + categoriaDto.getId());
 		}
 	}
+	
+	@Override
+	public List<Categoria> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Categoria> getAllWithPagination(int page, int size) {
@@ -57,5 +63,4 @@ public class CategoriaServiceImpl implements CategoriaService {
         Page<Categoria> categoriaPage = repository.findBySituacao(situation, pageRequest);
         return categoriaPage.getContent();
 	}
-
 }

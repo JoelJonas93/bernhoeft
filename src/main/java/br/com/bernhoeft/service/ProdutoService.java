@@ -9,5 +9,6 @@ public interface ProdutoService {
 	
 	public Produto save(ProdutoDTO produtoDTO);
 	public Produto update(ProdutoDTO produtoDTO);
+	public List<Produto> findAll();
 	public List<Produto> getAllWithPagination(int page, int size);
 }
