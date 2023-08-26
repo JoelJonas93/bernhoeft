@@ -2,6 +2,7 @@ package br.com.bernhoeft.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 
 import java.util.ArrayList;
@@ -37,19 +38,19 @@ public class CategoriaServiceTest {
 	private CategoriaRepository categoriaRepository;
 
 	List<Categoria> categorias = new ArrayList<>();
+	Categoria categoria1 = new Categoria();
+	Categoria categoria2 = new Categoria();
 
 	@BeforeEach
 	void setUp() {
-		Categoria categoria1 = new Categoria();
 		categoria1.setId(1l);
 		categoria1.setNome("Eletrônicos");
 		categoria1.setSituacao(Status.ATIVO);
-		Categoria catategoria2 = new Categoria();
-		catategoria2.setId(1l);
-		catategoria2.setNome("Eletrônicos");
-		catategoria2.setSituacao(Status.ATIVO);
+		categoria2.setId(1l);
+		categoria2.setNome("Eletrônicos");
+		categoria2.setSituacao(Status.ATIVO);
 		categorias.add(categoria1);
-		categorias.add(catategoria2);
+		categorias.add(categoria2);
 	}
 
 	@Test
@@ -110,6 +111,20 @@ public class CategoriaServiceTest {
 
 		Mockito.verify(categoriaRepository, times(1)).findAll(any(PageRequest.class));
 		Assertions.assertEquals(2, result.size());
+	}
+	
+	@Test
+	void filterCategoriesByName() {
+		categorias = new ArrayList<>();
+		categorias.add(categoria1);
+		Page<Categoria> categoriaPage = new PageImpl<>(categorias);
+
+		Mockito.when(categoriaRepository.findByNome(anyString(), any(PageRequest.class))).thenReturn(categoriaPage);
+
+		List<Categoria> result = service.filterCategoriesByName("Eletrônicos", 0, 10);
+
+		Mockito.verify(categoriaRepository, times(1)).findAll(any(PageRequest.class));
+		Assertions.assertEquals(1, result.size());
 	}
 
 }

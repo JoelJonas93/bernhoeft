@@ -10,5 +10,6 @@ public interface CategoriaService {
 	public Categoria save(CategoriaDTO categoriaDTO);
 	public Categoria update(CategoriaDTO categoriaDto);
 	public List<Categoria> getAllWithPagination(int page, int size);
+	public List<Categoria> filterCategoriesByName(String name, int page, int size);
 
 }

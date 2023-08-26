@@ -43,4 +43,9 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaPage.getContent();
 	}
 
+	@Override
+	public List<Categoria> filterCategoriesByName(String name, int page, int size) {
+		return null;
+	}
+
 }

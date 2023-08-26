@@ -11,5 +11,6 @@ import br.com.bernhoeft.model.Categoria;
 public interface CategoriaRepository extends JpaRepository<Categoria, String> {
 	
 	Optional<Categoria> findById(Long id);
-	Page<Categoria> findAll(Pageable pageable);	
+	Page<Categoria> findAll(Pageable pageable);
+	Page<Categoria> findByNome(String nome, Pageable pageable);
 }
