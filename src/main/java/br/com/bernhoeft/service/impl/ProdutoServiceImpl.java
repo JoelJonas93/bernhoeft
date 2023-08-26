@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import br.com.bernhoeft.dto.ProdutoDTO;
 import br.com.bernhoeft.model.Produto;
@@ -39,8 +41,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public List<Produto> getAllWithPagination(int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Produto> produtoPage = repository.findAll(pageRequest);
+        return produtoPage.getContent();
 	}
 
 }
