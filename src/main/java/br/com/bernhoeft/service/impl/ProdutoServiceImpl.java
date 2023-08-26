@@ -1,5 +1,6 @@
 package br.com.bernhoeft.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 		} else {
 			throw new EntityNotFoundException("Produto não encontrada com ID: " + produtoDTO.getId());
 		}
+	}
+
+	@Override
+	public List<Produto> getAllWithPagination(int page, int size) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
