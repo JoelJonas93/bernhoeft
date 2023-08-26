@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import br.com.bernhoeft.dto.CategoriaDTO;
+import br.com.bernhoeft.enums.Status;
 import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.repository.CategoriaRepository;
 import br.com.bernhoeft.service.CategoriaService;
@@ -48,6 +49,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Categoria> categoriaPage = repository.findByNome(name, pageRequest);
         return categoriaPage.getContent();
+	}
+
+	@Override
+	public List<Categoria> filterCategoriesBySituation(Status situation, int page, int size) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -126,5 +126,17 @@ public class CategoriaServiceTest {
 		Mockito.verify(categoriaRepository, times(1)).findByNome(anyString(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
+	
+	@Test
+	void filterCategoriesBySituation() {
+		Page<Categoria> categoriaPage = new PageImpl<>(categorias);
+
+		Mockito.when(categoriaRepository.findBySituacao(any(Status.class), any(PageRequest.class))).thenReturn(categoriaPage);
+
+		List<Categoria> result = service.filterCategoriesBySituation(Status.ATIVO, 0, 10);
+
+		Mockito.verify(categoriaRepository, times(1)).findBySituacao(any(Status.class), any(PageRequest.class));
+		Assertions.assertEquals(2, result.size());
+	}
 
 }
