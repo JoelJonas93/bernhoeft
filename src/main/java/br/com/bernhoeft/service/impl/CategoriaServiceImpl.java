@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import br.com.bernhoeft.dto.CategoriaDTO;
 import br.com.bernhoeft.model.Categoria;
@@ -36,7 +38,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public List<Categoria> getAllWithPagination(int page, int size) {
-		return null;
+		PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Categoria> categoriaPage = repository.findAll(pageRequest);
+        return categoriaPage.getContent();
 	}
 
 }
