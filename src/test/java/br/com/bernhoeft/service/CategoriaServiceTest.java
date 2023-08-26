@@ -123,7 +123,7 @@ public class CategoriaServiceTest {
 
 		List<Categoria> result = service.filterCategoriesByName("Eletrônicos", 0, 10);
 
-		Mockito.verify(categoriaRepository, times(1)).findAll(any(PageRequest.class));
+		Mockito.verify(categoriaRepository, times(1)).findByNome(anyString(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
 

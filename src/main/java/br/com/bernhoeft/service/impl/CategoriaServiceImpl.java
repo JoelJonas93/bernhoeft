@@ -45,7 +45,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public List<Categoria> filterCategoriesByName(String name, int page, int size) {
-		return null;
+		PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Categoria> categoriaPage = repository.findByNome(name, pageRequest);
+        return categoriaPage.getContent();
 	}
 
 }
