@@ -6,5 +6,6 @@ import br.com.bernhoeft.model.Categoria;
 public interface CategoriaService {
 	
 	public Categoria save(CategoriaDTO categoriaDTO);
+	public Categoria update(CategoriaDTO categoriaDto);
 
 }

@@ -1,5 +1,9 @@
 package br.com.bernhoeft.service;
 
+import static org.mockito.ArgumentMatchers.anyString;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,6 +45,24 @@ public class CategoriaServiceTest {
         Categoria result = service.save(dto);
         
         Assertions.assertEquals(result.getNome(), dto.toCategoria().getNome());
+	}
+	
+	@Test
+	void updateCategoria() {
+		CategoriaDTO dto = new CategoriaDTO();
+		dto.setId(1l);;
+		dto.setNome("Eletrônicos");
+		dto.setSituacao("Ativo");
+		
+		Categoria categoria = dto.toCategoria();
+        
+		Mockito.when(categoriaRepository.findById(anyString())).thenReturn(Optional.of(categoria));
+		dto.setSituacao("Inativo");
+        Mockito.when(categoriaRepository.save(categoria)).thenReturn(dto.toCategoria());
+        
+        Categoria result = service.save(dto);
+        
+        Assertions.assertEquals(result.getSituacao(), dto.toCategoria().getSituacao());
 	}
 
 }
