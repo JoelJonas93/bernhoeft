@@ -1,5 +1,6 @@
 package br.com.bernhoeft.service;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
 import java.util.Optional;
@@ -14,9 +15,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.bernhoeft.dto.CategoriaDTO;
+import br.com.bernhoeft.enums.Status;
 import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.repository.CategoriaRepository;
 import br.com.bernhoeft.service.impl.CategoriaServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoriaServiceTest {
@@ -36,7 +39,7 @@ public class CategoriaServiceTest {
 	void saveCategoria() {
 		CategoriaDTO dto = new CategoriaDTO();
 		dto.setNome("Eletrônicos");
-		dto.setSituacao("Ativo");
+		dto.setSituacao(Status.ATIVO);
 		
 		Categoria categoria = dto.toCategoria();
         
@@ -52,17 +55,31 @@ public class CategoriaServiceTest {
 		CategoriaDTO dto = new CategoriaDTO();
 		dto.setId(1l);;
 		dto.setNome("Eletrônicos");
-		dto.setSituacao("Ativo");
+		dto.setSituacao(Status.ATIVO);
 		
 		Categoria categoria = dto.toCategoria();
         
-		Mockito.when(categoriaRepository.findById(anyString())).thenReturn(Optional.of(categoria));
-		dto.setSituacao("Inativo");
+		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria));
+		dto.setSituacao(Status.INATIVO);
         Mockito.when(categoriaRepository.save(categoria)).thenReturn(dto.toCategoria());
         
-        Categoria result = service.save(dto);
+        Categoria result = service.update(dto);
         
         Assertions.assertEquals(result.getSituacao(), dto.toCategoria().getSituacao());
+	}
+	
+	@Test
+	void updateCategoriaNotExist() {
+		CategoriaDTO dto = new CategoriaDTO();
+		dto.setId(1l);;
+		dto.setNome("Eletrônicos");
+		dto.setSituacao(Status.ATIVO);
+		
+		Mockito.when(categoriaRepository.findById(anyLong())).thenThrow(EntityNotFoundException.class);
+        
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+        	service.update(dto);
+        });
 	}
 
 }

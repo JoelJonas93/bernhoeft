@@ -1,5 +1,6 @@
 package br.com.bernhoeft.dto;
 
+import br.com.bernhoeft.enums.Status;
 import br.com.bernhoeft.model.Categoria;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ public class CategoriaDTO {
 	
 	private Long id;
 	private String nome;
-    private String situacao;
+    private Status situacao;
     
     public Categoria toCategoria() {
         Categoria categoria = new Categoria();

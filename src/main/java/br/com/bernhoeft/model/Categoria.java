@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.bernhoeft.enums.Status;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ public class Categoria {
     private Long id;
 
     private String nome;
-    private String situacao;
+    private Status situacao;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "criado_em")
