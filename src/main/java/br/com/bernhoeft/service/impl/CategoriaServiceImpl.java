@@ -53,8 +53,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public List<Categoria> filterCategoriesBySituation(Status situation, int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Categoria> categoriaPage = repository.findBySituacao(situation, pageRequest);
+        return categoriaPage.getContent();
 	}
 
 }
