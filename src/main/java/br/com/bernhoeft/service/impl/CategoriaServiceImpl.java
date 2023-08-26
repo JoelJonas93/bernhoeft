@@ -1,5 +1,6 @@
 package br.com.bernhoeft.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 		} else {
 			throw new EntityNotFoundException("Categoria não encontrada com ID: " + categoriaDto.getId());
 		}
+	}
+
+	@Override
+	public List<Categoria> getAllWithPagination(int page, int size) {
+		return null;
 	}
 
 }
