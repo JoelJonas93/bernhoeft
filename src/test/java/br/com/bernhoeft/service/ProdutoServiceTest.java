@@ -2,6 +2,7 @@ package br.com.bernhoeft.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 
 import java.util.ArrayList;
@@ -102,26 +103,76 @@ public class ProdutoServiceTest {
 			service.update(dto);
 		});
 	}
-	
+
 	@Test
 	void findAll() {
 		Mockito.when(produtoRepository.findAll()).thenReturn(produtos);
-		
+
 		List<Produto> result = service.findAll();
-		
+
 		Mockito.verify(produtoRepository, times(1)).findAll();
 		Assertions.assertEquals(2, result.size());
 	}
-	
+
 	@Test
 	void getAllWithPagination() {
 		Page<Produto> produtoPage = new PageImpl<>(produtos);
-		
+
 		Mockito.when(produtoRepository.findAll(any(PageRequest.class))).thenReturn(produtoPage);
-		
+
 		List<Produto> result = service.getAllWithPagination(0, 10);
 
 		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
 		Assertions.assertEquals(2, result.size());
+	}
+
+	@Test
+	void filterProductsByDescription() {
+		produtos = new ArrayList<>();
+		produtos.add(produto1);
+		Page<Produto> produtoPage = new PageImpl<>(produtos);
+
+		Mockito.when(produtoRepository.findByDescricaoContaining(anyString(), any(PageRequest.class))).thenReturn(produtoPage);
+
+		List<Produto> result = service.filterProductsByDescription("", 0, 10);
+
+		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Assertions.assertEquals(1, result.size());
+	}
+	
+	@Test
+	void filterProductsByCategoria() {
+		produtos = new ArrayList<>();
+		produtos.add(produto1);
+		Page<Produto> produtoPage = new PageImpl<>(produtos);
+
+		Mockito.when(produtoRepository.findByCategoriaContaining(any(Categoria.class), any(PageRequest.class))).thenReturn(produtoPage);
+
+		List<Produto> result = service.filterProductsByCategoria(categoria1 , 0, 10);
+
+		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Assertions.assertEquals(1, result.size());
+	}
+	
+	@Test
+	void filterProductsBySituacao() {
+		produtos = new ArrayList<>();
+		produtos.add(produto1);
+		Page<Produto> produtoPage = new PageImpl<>(produtos);
+
+		Mockito.when(produtoRepository.findBySituacaoContaining(anyString(), any(PageRequest.class))).thenReturn(produtoPage);
+
+		List<Produto> result = service.filterProductsBySituacao("", 0, 10);
+
+		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Assertions.assertEquals(1, result.size());
+	}
+	
+	@Test
+	void delete() {
+		Mockito.when(produtoRepository.findById(anyInt())).thenReturn(Optional.of(produto1));
+		Mockito.doNothing().when(produtoRepository).delete(any(Produto.class));
+		
+		service.delete(produto1);
 	}
 }

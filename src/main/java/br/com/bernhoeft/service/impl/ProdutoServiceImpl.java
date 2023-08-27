@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.bernhoeft.dto.ProdutoDTO;
+import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.model.Produto;
 import br.com.bernhoeft.repository.ProdutoRepository;
 import br.com.bernhoeft.service.ProdutoService;
@@ -29,6 +30,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public Produto update(ProdutoDTO produtoDTO) {
+		if(produtoDTO.getId() == null) throw new EntityNotFoundException("Id não pode ser nulo");
 		Optional<Produto> produtoOptional = repository.findById(produtoDTO.getId());
 		if (produtoOptional.isPresent()) {
 			Produto produto = produtoOptional.get();
@@ -54,5 +56,25 @@ public class ProdutoServiceImpl implements ProdutoService {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Produto> produtoPage = repository.findAll(pageRequest);
         return produtoPage.getContent();
+	}
+
+	public List<Produto> filterProductsByDescription(String description, int page, int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Produto> filterProductsByCategoria(Categoria categoria, int page, int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Produto> filterProductsBySituacao(String situacao, int page, int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Produto produto) {
+		// TODO Auto-generated method stub
 	}
 }

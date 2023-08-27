@@ -14,5 +14,5 @@ public interface CategoriaService {
 	public List<Categoria> getAllWithPagination(int page, int size);
 	public List<Categoria> filterCategoriesByName(String name, int page, int size);
 	public List<Categoria> filterCategoriesBySituation(Status situation, int page, int size);
-
+	public void delete(Categoria categoria);
 }

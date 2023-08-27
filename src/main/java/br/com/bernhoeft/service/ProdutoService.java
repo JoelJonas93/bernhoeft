@@ -3,6 +3,7 @@ package br.com.bernhoeft.service;
 import java.util.List;
 
 import br.com.bernhoeft.dto.ProdutoDTO;
+import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.model.Produto;
 
 public interface ProdutoService {
@@ -11,4 +12,8 @@ public interface ProdutoService {
 	public Produto update(ProdutoDTO produtoDTO);
 	public List<Produto> findAll();
 	public List<Produto> getAllWithPagination(int page, int size);
+	public List<Produto> filterProductsByDescription(String description, int page, int size);
+	public List<Produto> filterProductsByCategoria(Categoria categoria, int page, int size);
+	public List<Produto> filterProductsBySituacao(String situacao, int page, int size);
+	public void delete(Produto produto);
 }

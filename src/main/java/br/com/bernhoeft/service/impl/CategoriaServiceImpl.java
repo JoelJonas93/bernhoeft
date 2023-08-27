@@ -30,6 +30,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public Categoria update(CategoriaDTO categoriaDto) {
+		if(categoriaDto.getId() == null) throw new EntityNotFoundException("Id não pode ser nulo");
 		Optional<Categoria> categoriaOptional = repository.findById(categoriaDto.getId());
 		if (categoriaOptional.isPresent()) {
 			Categoria categoria = categoriaOptional.get();
@@ -57,14 +58,20 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Override
 	public List<Categoria> filterCategoriesByName(String name, int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Categoria> categoriaPage = repository.findByNome(name, pageRequest);
+        Page<Categoria> categoriaPage = repository.findByNomeContaining(name, pageRequest);
         return categoriaPage.getContent();
 	}
 
 	@Override
 	public List<Categoria> filterCategoriesBySituation(Status situation, int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Categoria> categoriaPage = repository.findBySituacao(situation, pageRequest);
+        Page<Categoria> categoriaPage = repository.findBySituacaoContaining(situation, pageRequest);
         return categoriaPage.getContent();
+	}
+
+	@Override
+	public void delete(Categoria categoria) {
+		// TODO Auto-generated method stub
+		
 	}
 }
