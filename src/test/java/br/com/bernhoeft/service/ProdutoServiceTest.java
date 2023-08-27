@@ -17,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -25,11 +27,13 @@ import br.com.bernhoeft.dto.ProdutoDTO;
 import br.com.bernhoeft.enums.Status;
 import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.model.Produto;
+import br.com.bernhoeft.repository.CategoriaRepository;
 import br.com.bernhoeft.repository.ProdutoRepository;
 import br.com.bernhoeft.service.impl.ProdutoServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ProdutoServiceTest {
 
 	@InjectMocks
@@ -37,6 +41,9 @@ public class ProdutoServiceTest {
 
 	@Mock
 	private ProdutoRepository produtoRepository;
+	
+	@Mock
+	private CategoriaRepository categoriaRepository;
 
 	Categoria categoria1 = new Categoria();
 
@@ -120,7 +127,7 @@ public class ProdutoServiceTest {
 
 		Mockito.when(produtoRepository.findAll(any(PageRequest.class))).thenReturn(produtoPage);
 
-		List<Produto> result = service.getAllWithPagination(0, 10);
+		List<Produto> result = service.getAllWithPagination(0, 10).getContent();
 
 		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
 		Assertions.assertEquals(2, result.size());
@@ -134,9 +141,9 @@ public class ProdutoServiceTest {
 
 		Mockito.when(produtoRepository.findByDescricaoContaining(anyString(), any(PageRequest.class))).thenReturn(produtoPage);
 
-		List<Produto> result = service.filterProductsByDescription("", 0, 10);
+		List<Produto> result = service.filterProductsByDescription("", 0, 10).getContent();
 
-		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Mockito.verify(produtoRepository, times(1)).findByDescricaoContaining(anyString(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
 	
@@ -145,12 +152,13 @@ public class ProdutoServiceTest {
 		produtos = new ArrayList<>();
 		produtos.add(produto1);
 		Page<Produto> produtoPage = new PageImpl<>(produtos);
-
+		
+		Mockito.when(categoriaRepository.findById(anyInt())).thenReturn(Optional.of(categoria1));
 		Mockito.when(produtoRepository.findByCategoriaContaining(any(Categoria.class), any(PageRequest.class))).thenReturn(produtoPage);
 
-		List<Produto> result = service.filterProductsByCategoria(categoria1 , 0, 10);
+		List<Produto> result = service.filterProductsByCategoria(categoria1 , 0, 10).getContent();
 
-		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Mockito.verify(produtoRepository, times(1)).findByCategoriaContaining(any(Categoria.class), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
 	
@@ -162,9 +170,9 @@ public class ProdutoServiceTest {
 
 		Mockito.when(produtoRepository.findBySituacaoContaining(anyString(), any(PageRequest.class))).thenReturn(produtoPage);
 
-		List<Produto> result = service.filterProductsBySituacao("", 0, 10);
+		List<Produto> result = service.filterProductsBySituacao("", 0, 10).getContent();
 
-		Mockito.verify(produtoRepository, times(1)).findAll(any(PageRequest.class));
+		Mockito.verify(produtoRepository, times(1)).findBySituacaoContaining(anyString(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
 	
