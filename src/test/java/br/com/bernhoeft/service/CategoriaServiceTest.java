@@ -107,7 +107,7 @@ public class CategoriaServiceTest {
 
 		Mockito.when(categoriaRepository.findAll(any(PageRequest.class))).thenReturn(categoriaPage);
 
-		List<Categoria> result = service.getAllWithPagination(0, 10);
+		List<Categoria> result = service.getAllWithPagination(0, 10).getContent();
 
 		Mockito.verify(categoriaRepository, times(1)).findAll(any(PageRequest.class));
 		Assertions.assertEquals(2, result.size());
@@ -122,7 +122,7 @@ public class CategoriaServiceTest {
 		Mockito.when(categoriaRepository.findByNomeContaining(anyString(), any(PageRequest.class)))
 				.thenReturn(categoriaPage);
 
-		List<Categoria> result = service.filterCategoriesByName("Eletrônicos", 0, 10);
+		List<Categoria> result = service.filterCategoriesByName("Eletrônicos", 0, 10).getContent();
 
 		Mockito.verify(categoriaRepository, times(1)).findByNomeContaining(anyString(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
@@ -132,12 +132,12 @@ public class CategoriaServiceTest {
 	void filterCategoriesBySituation() {
 		Page<Categoria> categoriaPage = new PageImpl<>(categorias);
 
-		Mockito.when(categoriaRepository.findBySituacaoContaining(any(Status.class), any(PageRequest.class)))
+		Mockito.when(categoriaRepository.findBySituacaoContaining(anyString(), any(PageRequest.class)))
 				.thenReturn(categoriaPage);
 
-		List<Categoria> result = service.filterCategoriesBySituation(Status.ATIVO, 0, 10);
+		List<Categoria> result = service.filterCategoriesBySituation(Status.ATIVO.getDescricao(), 0, 10).getContent();
 
-		Mockito.verify(categoriaRepository, times(1)).findBySituacaoContaining(any(Status.class),
+		Mockito.verify(categoriaRepository, times(1)).findBySituacaoContaining(anyString(),
 				any(PageRequest.class));
 		Assertions.assertEquals(2, result.size());
 	}

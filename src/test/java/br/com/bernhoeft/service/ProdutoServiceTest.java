@@ -154,11 +154,11 @@ public class ProdutoServiceTest {
 		Page<Produto> produtoPage = new PageImpl<>(produtos);
 		
 		Mockito.when(categoriaRepository.findById(anyInt())).thenReturn(Optional.of(categoria1));
-		Mockito.when(produtoRepository.findByCategoriaContaining(any(Categoria.class), any(PageRequest.class))).thenReturn(produtoPage);
+		Mockito.when(produtoRepository.findByCategoriaContaining(anyInt(), any(PageRequest.class))).thenReturn(produtoPage);
 
 		List<Produto> result = service.filterProductsByCategoria(categoria1 , 0, 10).getContent();
 
-		Mockito.verify(produtoRepository, times(1)).findByCategoriaContaining(any(Categoria.class), any(PageRequest.class));
+		Mockito.verify(produtoRepository, times(1)).findByCategoriaContaining(anyInt(), any(PageRequest.class));
 		Assertions.assertEquals(1, result.size());
 	}
 	

@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.bernhoeft.dto.CategoriaDTO;
-import br.com.bernhoeft.enums.Status;
 import br.com.bernhoeft.model.Categoria;
 import br.com.bernhoeft.repository.CategoriaRepository;
 import br.com.bernhoeft.service.CategoriaService;
@@ -49,29 +48,31 @@ public class CategoriaServiceImpl implements CategoriaService {
 	}
 
 	@Override
-	public List<Categoria> getAllWithPagination(int page, int size) {
+	public Page<Categoria> getAllWithPagination(int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Categoria> categoriaPage = repository.findAll(pageRequest);
-        return categoriaPage.getContent();
+        return categoriaPage;
 	}
 
 	@Override
-	public List<Categoria> filterCategoriesByName(String name, int page, int size) {
+	public Page<Categoria> filterCategoriesByName(String name, int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Categoria> categoriaPage = repository.findByNomeContaining(name, pageRequest);
-        return categoriaPage.getContent();
+        return categoriaPage;
 	}
 
 	@Override
-	public List<Categoria> filterCategoriesBySituation(Status situation, int page, int size) {
+	public Page<Categoria> filterCategoriesBySituation(String situation, int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
         Page<Categoria> categoriaPage = repository.findBySituacaoContaining(situation, pageRequest);
-        return categoriaPage.getContent();
+        return categoriaPage;
 	}
 
 	@Override
 	public void delete(Categoria categoria) {
-		// TODO Auto-generated method stub
-		
+		Optional<Categoria> categoriaOptional = repository.findById(categoria.getId());
+		if(categoriaOptional.isPresent()) {
+			repository.delete(categoria);
+		}
 	}
 }

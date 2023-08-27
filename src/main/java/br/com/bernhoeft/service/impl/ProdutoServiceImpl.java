@@ -72,7 +72,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		Optional<Categoria> categoriaOptional = categoriaRepository.findById(categoria.getId());
 		if(categoriaOptional.isPresent()) {
 			PageRequest pageRequest = PageRequest.of(page, size);
-			Page<Produto> produtoPage = repository.findByCategoriaContaining(categoriaOptional.get(), pageRequest);
+			Page<Produto> produtoPage = repository.findByCategoriaContaining(categoriaOptional.get().getId(), pageRequest);
 			return produtoPage;
 		} else {
 			throw new EntityNotFoundException("Categoria não encontrada");
