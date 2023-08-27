@@ -22,4 +22,4 @@ git clone https://github.com/JoelJonas93/bernhoeft
 ## Nota
 Nos controllers do projeto foi configurado o CrossOrigin da seguinte forma de acordo com a url que o front está rodando @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600).
 Primeiro projeto usando TDD de acordo como foi pedido. Através dos commits verá que foi feito o teste e depois implementado a lógica com refatoração.
-Configurar o banco de dado de acordo com as informações no arquivo application.properties.
+Configurar o banco de dados de acordo com as informações no arquivo application.properties.
