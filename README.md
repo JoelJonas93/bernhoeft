@@ -28,7 +28,7 @@ mvn clean install -U
 
 Caso não tenha o lombok instalado na IDE, instalar de acordo com a IDE que está usando.
 
-Para executar o projeto rodar a classe BernhoeftApplication.
+Para executar o projeto rodar a classe BernhoeftApplication. Será executado localmente na porta padrão 8080.
 
 ## Nota
 Nos controllers do projeto foi configurado o CrossOrigin da seguinte forma de acordo com a url que o front está rodando @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600).
