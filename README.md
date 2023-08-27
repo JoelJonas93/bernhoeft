@@ -4,7 +4,7 @@
   </a>
 </h1>
 
-## Technologies Used
+## Tecnologias usadas
 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [Spring](https://spring.io/projects/spring-boot)
@@ -12,7 +12,7 @@
 - [Flyway](https://flywaydb.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 
-## Development
+## Desenvolvimento
 
 Para obter uma cópia local do código, clone-o usando git:
 
