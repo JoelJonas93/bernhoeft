@@ -11,6 +11,7 @@
 - [Lombok](https://projectlombok.org/)
 - [Flyway](https://flywaydb.org/)
 - [PostgreSQL](https://www.postgresql.org/)
+- [Mockito](https://site.mockito.org/)
 
 ## Desenvolvimento
 
